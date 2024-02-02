@@ -4,6 +4,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UIElements.Experimental;
 using UnityEngine.UI;
+using System;
+using System.Security.Cryptography.X509Certificates;
+using System.Numerics;
 
 public class SliderScript : MonoBehaviour
 {
@@ -14,6 +17,7 @@ public class SliderScript : MonoBehaviour
     public TextMeshProUGUI speedText = null;
     public TextMeshProUGUI emfText = null;
     public TextMeshProUGUI coilText = null;
+    public GameObject coil;
     public float fluxlocalvalue;
     public float speedlocalvalue;
     public float area = 10f;
@@ -41,7 +45,10 @@ public class SliderScript : MonoBehaviour
     
     public void EMFChange()
     {
-        emfText.text = (fluxSlider.value * speedSlider.value * area * numberOfCoil.value).ToString();
+        UnityEngine.Quaternion x_quaternion = coil.transform.rotation;
+        UnityEngine.Vector3 x_vector = x_quaternion.eulerAngles;
+        float x = x_vector.x;
+        emfText.text = (fluxSlider.value * speedSlider.value * area * numberOfCoil.value * Math.Sin(x)).ToString();
     }
 
     public void NoOfCoils(float value)
